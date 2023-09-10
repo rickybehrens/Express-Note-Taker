@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const PORT = process.env.Port || 3001;
 
@@ -6,9 +7,36 @@ const app = express();
 
 // Middleware for parsing application/jsaon and urlencoded data
 app.use(express.json());
-app.use(express.urleconded({ extended: true}));
+app.use(express.urleconded({ extended: true }));
 
 app.use(express.static('public'));
+
+app.post('/api/notes', (req, res) => {
+    // Destructuring assignment for the items in req.body
+    const { title, text } = req.body;
+
+    // Check if both title and text are present in the request
+    if (title && text) {
+        // Create a new note object
+        const newNote = {
+            title,
+            text,
+        };
+
+        // Here, you can save the newNote to your database (e.g., db.json) or perform other actions as needed.
+
+        // Send a response to the client
+        res.json(newNote);
+    } else {
+        // If title or text is missing, send an error response
+        res.status(400).json({ error: 'Both title and text are required.' });
+    }
+});
+
+// Route to handle the /notes path and render the notes.html page
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
 
 // The landing page of the Note taker already has a working eventListener and everything it's set up to add the back-end files to make it work
 
@@ -32,5 +60,5 @@ app.use(express.static('public'));
 
 
 app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT}`)
+    console.log(`App listening at http://localhost:${PORT}`)
 );
