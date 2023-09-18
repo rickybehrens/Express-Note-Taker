@@ -9,7 +9,6 @@ Create an application called Note Taker that can be used to write and save notes
 - [Usage](#usage)
 - [License](#license)
 - [Contributing](#contributing)
-- [Tests](#tests)
 - [Questions](#questions)
 - [Screenshots](#screenshots)
   
@@ -21,7 +20,13 @@ npm i
 
   
 ## Usage
-Nothing for now
+The application will stroe any notes you input with it's title and text. The text can handle several lines that can be a list or actions. To make the application work, follow these steps:
+    * The home page describes the functionality of the app is a breif sentence "Take notes with Express".
+    * Once the user clicks on the "Get Started" button, the app takes you to the notes section. Here, the user will find a place holder for both the Note's Title and the Text, as well as any other note that has been inputed.
+    * To input a new note, simply git the note a title and write the text. If the text requeires more than one line, simply press the enter key to add breaks and new lines. Once the note has a title and the whole text, click on the "save" icon on the top right corner. This will save the note on the left column.
+    * If the user would like to access any of the old notes, simply click on the note's title that are listed on the left side of the screen and the note will appear on the right side with the title and the text. Please be aware that this note cannot be modified.
+    * Once you have read the old note the user chose to see, if you'd like to input a new note, siply click on the plsu icon on the top right corner and the placeholder for Title and Text will appear. Simply input the new note's title and text and, once again, click on the "save" icon to save the note on the left column.
+    * If the user would like to delete an old note, simply click the red trash can icon of the note that you would like to delete.
 
   
 ## License
@@ -39,14 +44,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   
     
 ## Contributing
-Nothing for now
-
-  
-## Tests
-To run tests, run the following command:
-```
-npm test
-```
+If the user would like to make any contributions to the application, please find the information on the "Questions" section of this README file.
 
   
 ## Questions
@@ -54,5 +52,8 @@ If you have any questions about the repo, open an issue or contact me directly a
 
 ## Screenshots
 <!-- Add screenshots here -->
-<img src="path_to_screenshot_image_1" alt="Screenshot 1">
-<img src="path_to_screenshot_image_2" alt="Screenshot 2">
+<img src="./assets/images/01.png" alt="Screenshot 1">
+<img src="./assets/images/02.png" alt="Screenshot 2">
+<img src="./assets/images/03.png" alt="Screenshot 3">
+<img src="./assets/images/04.png" alt="Screenshot 4">
+<img src="./assets/images/05.png" alt="Screenshot 5">

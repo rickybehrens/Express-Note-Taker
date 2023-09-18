@@ -18,5 +18,10 @@
         "title": "Test 5",
         "text": "Test 5",
         "id": "44c6d79c-b0d2-4f3f-9368-2d0c351bb896"
+    },
+    {
+        "title": "README",
+        "text": "This is a sample for the README file",
+        "id": "da4e3a03-c332-47a9-88c0-c609da418dc1"
     }
 ]
