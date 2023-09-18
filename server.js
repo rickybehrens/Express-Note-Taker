@@ -13,17 +13,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// GET /notes should return the notes.html file.
+// GET /api/notes should return the notes.html file.
 app.get('/api/notes', (req, res) => {
+  // Read the contents of the 'db.json' file to retrieve notes data
   fs.readFile('./db/db.json', (err, data) => {
     if (err) {
       throw err;
     }
-    // console.log(data)
+    // Parse the JSON data and send it as a JSON response
     var info = JSON.parse(data);
-    // console.log(info)
-    res.json(info)
-  })
+    res.json(info);
+  });
 });
 
 app.post('/api/notes', (req, res) => {
@@ -32,62 +32,63 @@ app.post('/api/notes', (req, res) => {
 
   // Check if both title and text are present in the request
   if (title && text) {
-    // Create a new note object
+    // Create a new note object with a unique ID generated using uuidv4
     const newNote = {
       title,
       text,
-    };  
-    newNote.id = uuidv4()
-    console.log(newNote)
-    // Read existing notes from file
+    };
+    newNote.id = uuidv4();
+
+    // Read existing notes from the 'db.json' file
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) {
         console.error(err);
       } else {
-        // Convert string into JSON object
+        // Convert the string into a JSON object
         const parsedNotes = JSON.parse(data);
 
-        // Add a new note
+        // Add the new note to the existing notes
         parsedNotes.push(newNote);
 
-        // Write updated notes back to the file
-        fs.writeFile(
-          './db/db.json',
-          JSON.stringify(parsedNotes, null, 4),
-          (writeErr) => {
-            if (writeErr) {
-              console.error(writeErr);
-            } else {
-              console.info('Successfully updated notes!');
+        // Write the updated notes back to the 'db.json' file
+        fs.writeFile('./db/db.json', JSON.stringify(parsedNotes, null, 4), (writeErr) => {
+          if (writeErr) {
+            console.error(writeErr);
+          } else {
+            console.info('Successfully updated notes!');
 
-              // Send a response to the client (inside the callback)
-              const response = {
-                status: 'success',
-                body: newNote,
-              };  
-              res.json(response);
-            }  
-          }  
-        );  
-      }  
-    });  
+            // Send a response to the client indicating success
+            const response = {
+              status: 'success',
+              body: newNote,
+            };
+            res.json(response);
+          }
+        });
+      }
+    });
   } else {
     // If title or text is missing, send an error response
     res.status(400).json({ error: 'Both title and text are required.' });
-  }  
-});  
+  }
+});
 
 // DELETE /api/notes/:id to delete a note by ID
 app.delete('/api/notes/:id', (req, res) => {
   const noteId = req.params.id;
 
+  // Read the contents of the 'db.json' file
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
     } else {
+      // Parse the JSON data into an array of notes
       const parsedNotes = JSON.parse(data);
+
+      // Filter out the note with the specified ID and create an updated notes array
       const updatedNotes = parsedNotes.filter((note) => note.id !== noteId);
 
+      // Write the updated notes back to the 'db.json' file
       fs.writeFile('./db/db.json', JSON.stringify(updatedNotes, null, 4), (writeErr) => {
         if (writeErr) {
           console.error(writeErr);
@@ -105,7 +106,7 @@ app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-//GET * should return the index.html file.
+// GET * should return the index.html file.
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
